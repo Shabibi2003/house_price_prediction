@@ -5,6 +5,9 @@ import joblib
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 from sklearn.linear_model import LinearRegression
 
+# this is the line for pushing the code in the github
+
+
 # Load and preprocess the data
 df = pd.read_csv('Housing.csv')
 scaler = MinMaxScaler()
