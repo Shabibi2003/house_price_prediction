@@ -5,7 +5,6 @@ import joblib
 from sklearn.preprocessing import MinMaxScaler, LabelEncoder
 from sklearn.linear_model import LinearRegression
 
-# this is the line for pushing the code in the github
 
 
 # Load and preprocess the data
@@ -63,10 +62,47 @@ def make_prediction(area, bedrooms, bathrooms, stories, mainroad, guestroom, bas
     return predicted_price[0]
 
 # Streamlit UI for user input
-st.title('Housing Price Prediction')
-st.write('Enter the details of the house to predict the price.')
+st.markdown(
+    """
+    <style>
+    .main {
+        background-color: #f5f7fa;
+        padding: 30px 10px 10px 10px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+    .stButton>button {
+        background-color: #4F8BF9;
+        color: white;
+        font-weight: bold;
+        border-radius: 8px;
+        padding: 0.5em 2em;
+        margin-top: 1em;
+    }
+    .stButton>button:hover {
+        background-color: #2563eb;
+        color: #fff;
+    }
+    .result {
+        background: #e0f7fa;
+        color: #006064;
+        padding: 1em;
+        border-radius: 8px;
+        font-size: 1.2em;
+        margin-top: 1.5em;
+        text-align: center;
+        font-weight: bold;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-# User inputs for prediction
+st.title('🏠 Housing Price Prediction')
+st.markdown('<div class="main">', unsafe_allow_html=True)
+st.markdown('Enter the details of the house to predict the price. Fill in the form and click **Predict Price**.')
+
+# User inputs for prediction (in main area, not sidebar)
 area = st.number_input('Area (in sqft)', min_value=0, value=1200)
 bedrooms = st.number_input('Number of Bedrooms', min_value=0, value=3)
 bathrooms = st.number_input('Number of Bathrooms', min_value=0, value=2)
@@ -80,7 +116,8 @@ parking = st.number_input('Number of Parking Spaces', min_value=0, value=2)
 prefarea = st.selectbox('Is the house in a Preferred Area?', ['yes', 'no'])
 furnishingstatus = st.selectbox('Furnishing Status', ['unfurnished', 'semi-furnished', 'furnished'])
 
-# Predict button
 if st.button('Predict Price'):
     predicted_price = make_prediction(area, bedrooms, bathrooms, stories, mainroad, guestroom, basement, hotwaterheating, airconditioning, parking, prefarea, furnishingstatus)
-    st.write(f"The predicted price of the house is: ₹{predicted_price:,.2f}")
+    st.markdown(f'<div class="result">The predicted price of the house is: ₹{predicted_price:,.2f}</div>', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
